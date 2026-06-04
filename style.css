@@ -1,0 +1,202 @@
+/* Khởi tạo font chữ và nền toàn trang */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Nền ban đầu */
+    background: linear-gradient(135deg, #1f4068, #162447, #0f1a1c);
+    padding: 20px;
+    overflow: hidden;
+    /* Ngăn tình trạng thanh cuộn xuất hiện vô lý khi có hiệu ứng nền */
+    /* Giúp chuyển đổi màu nền giữa Nắng - Mây - Mưa cực kỳ mượt mà */
+    transition: background 0.8s ease-in-out;
+}
+
+/* Hộp chứa thời tiết hiệu ứng Glassmorphism (Kính mờ) */
+.weather-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #ffffff;
+    z-index: 1;
+    /* Đảm bảo luôn nằm trên Canvas */
+}
+
+.app-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Thanh tìm kiếm */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#cityInput {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+#cityInput::placeholder {
+    color: #ddd;
+}
+
+#cityInput:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+#searchBtn {
+    padding: 12px 25px;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    background: #00b4d8;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#searchBtn:hover {
+    background: #0096c7;
+    transform: translateY(-2px);
+}
+
+/* Vùng hiển thị kết quả */
+.result {
+    margin-top: 10px;
+    transition: all 0.5s ease;
+}
+
+.welcome-text {
+    color: #ccc;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+/* CSS cho dữ liệu thời tiết khi đổ ra */
+.weather-info {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.city-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.temp-display {
+    font-size: 4rem;
+    font-weight: 300;
+    margin: 15px 0;
+    color: #fff;
+    display: block;
+}
+
+.weather-desc {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+/* Bảng thông số chi tiết */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}
+
+.detail-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.detail-item span {
+    font-size: 0.85rem;
+    color: #aaa;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.detail-item p {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Hiệu ứng xuất hiện mượt mà */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tối ưu hóa bộ lọc icon (Đã gộp dòng chuẩn chỉnh) */
+.weather-info img {
+    filter: sepia(1) saturate(6) hue-rotate(185deg) brightness(1.2) drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.3));
+    -webkit-filter: sepia(1) saturate(6) hue-rotate(185deg) brightness(1.2) drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.3));
+
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+/* Định vị Canvas hiệu ứng nền */
+#rainCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    /* Không cản trở người dùng click chuột vào ô input */
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Kích hoạt hiển thị canvas mượt mà khi có bất kỳ hiệu ứng nào */
+body.rainy-bg #rainCanvas {
+    opacity: 1;
+}
