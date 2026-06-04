@@ -14,16 +14,26 @@
 
     <div class="weather-container">
         <h1 class="app-title">Dự Báo Thời Tiết</h1>
-
         <div class="search-box">
             <input type="text" id="cityInput" placeholder="Nhập tên thành phố" autocomplete="off">
             <button id="searchBtn">Tìm kiếm</button>
         </div>
-
         <div class="result">
             <div class="welcome-text">Nhập một thành phố để bắt đầu xem thời tiết nhé!</div>
         </div>
     </div>
+
+    <div class="hourly-container" id="hourlyBox" style="display: none;">
+        <div class="hourly-list" id="hourlyList">
+        </div>
+    </div>
+
+    <div class="forecast-container" id="forecastBox" style="display: none;">
+        <h3 class="forecast-title">Dự báo 5 ngày tới</h3>
+        <div class="forecast-list" id="forecastList">
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
